@@ -5,20 +5,20 @@ import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
-import { login } from '@/actions/login';
-import { ErrorMessage,SuccessMessage } from '@/components/form-messages';
+import { login } from '@/actions/sign-in';
+import { CardWrapper } from '@/components/auth/card-wrapper';
+import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
   FormField,
-  FormItem, FormLabel,
+  FormItem,
+  FormLabel,
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { SignInSchema } from '@/schemas';
-
-import { CardWrapper } from './card-wrapper';
 
 export const SignInForm = (): ReactElement => {
   const [isPending, startTransition] = useTransition();
@@ -36,9 +36,9 @@ export const SignInForm = (): ReactElement => {
     startTransition(() => {
       setError(undefined);
       setSuccess(undefined);
-      login(values).then((data: { error?: string, success?: string }): void => {
-        setError(data.error);
-        setSuccess(data.success);
+      login(values).then((data: { error?: string, success?: string } | void): void => {
+        setError(data?.error);
+        setSuccess(data?.success);
       });
     });
   };
