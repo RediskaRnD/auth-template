@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 
 import { auth, signOut } from '@/auth';
 import { Button } from '@/components/ui/button';
+import { SIGNIN_PAGE } from '@/routes';
 
 const SettingsPage = async (): Promise<ReactElement> => {
   const session = await auth();
@@ -11,7 +12,7 @@ const SettingsPage = async (): Promise<ReactElement> => {
       <form action={async () => {
         'use server';
 
-        await signOut();
+        await signOut({ redirectTo: SIGNIN_PAGE });
       }}>
         <Button type="submit">
           Sign Out
