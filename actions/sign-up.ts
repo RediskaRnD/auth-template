@@ -1,6 +1,6 @@
 'use server';
 
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import * as z from 'zod';
 
 import { getUserByEmail } from '@/data/user';
@@ -24,7 +24,6 @@ export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ er
     const { name, email, password } = validatedFields.data;
     // const existingUser = await getUserByEmail(client, { email });
     const existingUser = await getUserByEmail(email);
-
     if (existingUser) {
       return { error: 'Email already in use.' };
     }

@@ -8,7 +8,16 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Auth',
-  description: 'Auth template'
+  description: 'Auth template',
+  icons: [{
+    rel: 'icon',
+    url: '/favicon_32x32.ico',
+  },
+  //   {
+  //   rel: 'apple-touch-icon',
+  //   url: 'https:// example. com/ apple-icon. png'
+  // }
+  ]
 };
 
 export default function RootLayout({

@@ -4,7 +4,6 @@ import { AuthError } from 'next-auth';
 import * as z from 'zod';
 
 import { signIn } from '@/auth';
-import { getUserByEmail } from '@/data/user';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { SignInSchema } from '@/schemas';
 
@@ -21,8 +20,6 @@ export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
   }
   const { email, password } = validatedFields.data;
 
-  // const user = await getUserByEmail(email);
-
   try {
     await signIn('credentials', {
       email,
@@ -36,7 +33,7 @@ export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
       }
       return { error: 'Something went wrong.' };
     }
-    // Don't remove it, otherwise you will not be redirected.
+    // important! Don't remove it, otherwise you will not be redirected.
     throw error;
   }
 };
