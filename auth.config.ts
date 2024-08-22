@@ -1,4 +1,3 @@
-import PostgresAdapter from '@auth/pg-adapter';
 import bcrypt from 'bcrypt';
 import type { NextAuthConfig, User } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
@@ -7,10 +6,9 @@ import Google from 'next-auth/providers/google';
 
 import { pgPool } from '@/lib/db';
 import { SignInSchema } from '@/schemas';
-import { getUserByEmail } from '@/sqlc/db/query_sql';
+import { getUserByEmail } from '@/data/user';
 
 export default {
-  // adapter: PostgresAdapter(pgPool),
   providers: [Credentials({
     credentials: {
       username: { label: 'Username' },
@@ -22,21 +20,21 @@ export default {
       if (validatedFields.success) {
         const { email, password } = validatedFields.data;
 
+        // const user = await getUserByEmail(email);
         // const client = await pgPool?.connect();
-        // if (!client) {
-        //   return null;
-        // }
-        // try {
-        //   const user = await getUserByEmail(client, { email });
-        //   if (!user?.name) {  // TODO: replace with !user?.password
-        //     return null;
+        // if (client) {
+        //   try {
+        //     const user = await getUserByEmail(client, { email });
+        //     if (!user?.name) {  // TODO: replace with !user?.password
+        //       return null;
+        //     }
+        //     const passwordMatched = await bcrypt.compare(password, user.name);
+        //     if (passwordMatched) {
+        //       return { id: user.id.toString(), email: user.email, name: user.name };
+        //     }
+        //   } finally {
+        //     client.release();
         //   }
-        //   const passwordMatched = await bcrypt.compare(password, user.name);
-        //   if (passwordMatched) {
-        //     return { id: user.id.toString(), email: user.email, name: user.name };
-        //   }
-        // } finally {
-        //   client.release();
         // }
       }
       return null;

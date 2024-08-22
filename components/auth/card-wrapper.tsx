@@ -9,7 +9,7 @@ import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader
+  CardHeader, CardTitle
 } from '@/components/ui/card';
 
 interface CardWrapperProps {

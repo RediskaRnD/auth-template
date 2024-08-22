@@ -87,7 +87,7 @@ export default [
       '@typescript-eslint/no-this-alias': 'error', // Disallows aliasing this.
       '@typescript-eslint/no-unused-vars': 'warn', // Warns on variables that are declared but not used
       '@typescript-eslint/no-use-before-define': 'error', // Disallows usage of variables before they are defined.
-      '@typescript-eslint/no-var-requires': 'error', // Disallows usage of require statements except in import statements.
+      // '@typescript-eslint/no-var-requires': 'error', // Disallows usage of require statements except in import statements.
       '@typescript-eslint/prefer-namespace-keyword': 'error', // Requires the use of the namespace keyword instead of the module keyword to declare custom TypeScript modules.
       '@typescript-eslint/triple-slash-reference': 'error', // Disallows triple-slash references.
     },

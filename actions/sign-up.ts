@@ -3,9 +3,9 @@
 import bcrypt from 'bcrypt';
 import * as z from 'zod';
 
-import { pgPool } from '@/lib/db';
+import { getUserByEmail } from '@/data/user';
+import { prisma } from '@/lib/db';
 import { SignUpSchema } from '@/schemas';
-import { createUser, getUserByEmail } from '@/sqlc/db/query_sql';
 
 export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ error?: string, success?: string }> => {
   const validatedFields = SignUpSchema.safeParse(values);
@@ -16,19 +16,29 @@ export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ er
     return { error: 'Sign up failed.' };
   }
 
-  const client = await pgPool?.connect();
-  if (!client) {
-    return { error: 'Unable to connect to database.' };
-  }
+  // const client = await pgPool?.connect();
+  // if (!client) {
+  //   return { error: 'Unable to connect to database.' };
+  // }
   try {
-    const { email, password, name } = validatedFields.data;
-    const existingUser = await getUserByEmail(client, { email });
+    const { name, email, password } = validatedFields.data;
+    // const existingUser = await getUserByEmail(client, { email });
+    const existingUser = await getUserByEmail(email);
+
     if (existingUser) {
       return { error: 'Email already in use.' };
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await createUser(client, { name, email });
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword
+      }
+    });
+
+    // const user = await createUser(client, { name, email });
     if (!user) {
       return { error: 'Failed to create new user.' };
     }
@@ -38,6 +48,6 @@ export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ er
 
     return { success: 'User created successfully.' };
   } finally {
-    client.release();
+    // client.release();
   }
 };
