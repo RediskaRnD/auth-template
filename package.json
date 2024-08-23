@@ -6,14 +6,19 @@
     "build": "next build",
     "dev": "next dev",
     "start": "next start",
-    "lint": "eslint --fix"
+    "lint": "eslint --fix",
+    "prisma-generate": "prisma generate",
+    "prisma-push": "prisma db push",
+    "prisma-reset": "prisma migrate reset",
+    "prisma-studio": "prisma studio"
   },
   "dependencies": {
+    "@auth/core": "^0.34.2",
     "@auth/pg-adapter": "^1.4.2",
     "@auth/prisma-adapter": "^2.4.2",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.18.0",
-    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-icons": "^1.3.0zz",
     "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "bcryptjs": "^2.4.3",
