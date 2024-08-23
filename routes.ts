@@ -4,6 +4,7 @@
 export const DEFAULT_LOGIN_REDIRECT = '/settings';
 export const SIGNIN_PAGE = '/auth/sign-in';
 export const SIGNUP_PAGE = '/auth/sign-up';
+export const ERROR_PAGE = '/auth/error';
 
 /**
  * An array of routes that are accessible to the public.
@@ -19,7 +20,8 @@ export const publicRoutes = [
  */
 export const authRoutes = [
   SIGNIN_PAGE,
-  SIGNUP_PAGE
+  SIGNUP_PAGE,
+  ERROR_PAGE
 ];
 
 /**

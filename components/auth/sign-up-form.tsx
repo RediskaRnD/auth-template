@@ -1,12 +1,13 @@
 'use client';
 
+import { SIGNIN_PAGE } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { signUp } from '@/actions/sign-up';
-import { CardWrapper } from '@/components/auth/card-wrapper';
+import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
 import { Button } from '@/components/ui/button';
 import {
@@ -46,9 +47,10 @@ export const SignUpForm = (): ReactElement => {
 
   return (
     <CardWrapper
+      titleLabel="🔐 Auth"
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
-      backButtonHref="/auth/sign-in"
+      backButtonHref={SIGNIN_PAGE}
       showSocial
     >
       <Form {...form}>

@@ -1,5 +1,6 @@
 'use client';
 
+import { SIGNIN_PAGE } from '@/routes';
 import { useRouter } from 'next/navigation';
 import { ReactElement, ReactNode } from 'react';
 
@@ -18,7 +19,7 @@ export const LoginButton = ({
 
   const onClick = () => {
     console.log('Login button clicked');
-    router.push('/auth/sign-in');
+    router.push(SIGNIN_PAGE);
   };
 
   if (mode === 'modal') {

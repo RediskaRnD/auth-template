@@ -9,6 +9,8 @@ import { SignInSchema } from '@/schemas';
 
 export default {
   providers: [
+    GitHub,
+    Google,
     Credentials({
       credentials: {
         username: { label: 'Username' },
@@ -39,5 +41,6 @@ export default {
         }
         return null;
       }
-    }), GitHub, Google]
+    })
+  ]
 } satisfies NextAuthConfig;

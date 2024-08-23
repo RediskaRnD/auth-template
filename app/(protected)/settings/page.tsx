@@ -12,6 +12,7 @@ export const metadata: Metadata = {
 
 const SettingsPage = async (): Promise<ReactElement> => {
   const session = await auth();
+
   return (
     <div>
       {JSON.stringify(session)}

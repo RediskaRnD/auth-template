@@ -7,6 +7,7 @@ import NextAuth, { Session } from 'next-auth';
 import authConfig from '@/auth.config';
 import { getUserById } from '@/data/user';
 import { prisma } from '@/lib/db';
+import { ERROR_PAGE, SIGNIN_PAGE } from '@/routes';
 
 declare module 'next-auth' {
   /**
@@ -14,6 +15,7 @@ declare module 'next-auth' {
    */
   interface Session {
     user: {
+      id: string;
       /** The user's role. */
       role: UserRole;
       /**
@@ -29,15 +31,38 @@ declare module 'next-auth' {
 declare module '@auth/core/jwt' {
   /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
   interface JWT {
-    role?: UserRole | undefined;
+    role: UserRole | undefined;
   }
 }
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   debug: process.env.NODE_ENV !== 'production',
   adapter: PrismaAdapter(prisma),
+  pages: {
+    signIn: SIGNIN_PAGE,
+    error: ERROR_PAGE
+  },
+  events: {
+    async linkAccount({ user }) {
+      if (user.id) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: { emailVerified: new Date() }
+        });
+      }
+    }
+  },
   callbacks: {
+    // async signIn({ user }): Promise<boolean> {
+    //   console.log('cb::signIn');
+    //   if (user.id) {
+    //     const existingUser = await getUserById(user.id);
+    //     return !!existingUser?.emailVerified;
+    //   }
+    //   return false;
+    // },
     async jwt({ token, user }): Promise<JWT> {
+      console.log('cb::jwt');
       console.log({ token });
       console.log({ user });
       if (token.sub) {
@@ -47,6 +72,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       return token;
     },
     async session({ token, session }): Promise<Session> {
+      console.log('cb::session');
       const user = session.user;
       if (user) {
         if (token.sub) {

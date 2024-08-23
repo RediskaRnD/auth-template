@@ -1,7 +1,7 @@
 import { QueryArrayConfig, QueryArrayResult } from 'pg';
 
 interface Client {
-    query: (config: QueryArrayConfig) => Promise<QueryArrayResult>;
+  query: (config: QueryArrayConfig) => Promise<QueryArrayResult>;
 }
 
 export const getUserByIdQuery = `-- name: GetUserById :one
@@ -11,15 +11,15 @@ WHERE u.id = $1
 LIMIT 1`;
 
 export interface GetUserByIdArgs {
-    id: number;
+  id: number;
 }
 
 export interface GetUserByIdRow {
-    id: number;
-    name: string;
-    email: string;
-    emailverified: Date | null;
-    image: string | null;
+  id: number;
+  name: string;
+  email: string;
+  emailverified: Date | null;
+  image: string | null;
 }
 
 export async function getUserById(client: Client, args: GetUserByIdArgs): Promise<GetUserByIdRow | null> {
@@ -48,15 +48,15 @@ WHERE u.email = $1
 LIMIT 1`;
 
 export interface GetUserByEmailArgs {
-    email: string;
+  email: string;
 }
 
 export interface GetUserByEmailRow {
-    id: number;
-    name: string;
-    email: string;
-    emailverified: Date | null;
-    image: string | null;
+  id: number;
+  name: string;
+  email: string;
+  emailverified: Date | null;
+  image: string | null;
 }
 
 export async function getUserByEmail(client: Client, args: GetUserByEmailArgs): Promise<GetUserByEmailRow | null> {
@@ -84,12 +84,12 @@ VALUES ($1, $2)
 RETURNING id`;
 
 export interface CreateUserArgs {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 }
 
 export interface CreateUserRow {
-    id: number;
+  id: number;
 }
 
 export async function createUser(client: Client, args: CreateUserArgs): Promise<CreateUserRow | null> {

@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 import { login } from '@/actions/sign-in';
-import { CardWrapper } from '@/components/auth/card-wrapper';
+import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +18,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { SIGNUP_PAGE } from '@/routes';
 import { SignInSchema } from '@/schemas';
 
 export const SignInForm = (): ReactElement => {
@@ -45,9 +46,10 @@ export const SignInForm = (): ReactElement => {
 
   return (
     <CardWrapper
+      titleLabel="🔐 Auth"
       headerLabel="Welcome back"
       backButtonLabel="Don't have an account?"
-      backButtonHref="/auth/sign-up"
+      backButtonHref={SIGNUP_PAGE}
       showSocial
     >
       <Form {...form}>

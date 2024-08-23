@@ -2,26 +2,30 @@
 
 import React, { ReactElement } from 'react';
 
-import { BackButton } from '@/components/auth/back-button';
-import { Header } from '@/components/auth/header';
+import { BackButton } from '@/components/auth/card-wrapper/back-button';
+import { Title } from '@/components/auth/card-wrapper/title';
+import { Header } from '@/components/auth/card-wrapper/header';
 import { Social } from '@/components/auth/social';
 import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader, CardTitle
+  CardHeader,
+  CardTitle
 } from '@/components/ui/card';
 
 interface CardWrapperProps {
+  titleLabel: string;
+  headerLabel: string;
   backButtonHref: string;
   backButtonLabel: string;
-  children: React.ReactNode;
-  headerLabel: string;
+  children?: React.ReactNode;
   showSocial?: boolean;
 }
 
 export const CardWrapper = ({
   children,
+  titleLabel,
   headerLabel,
   backButtonLabel,
   backButtonHref,
@@ -29,6 +33,9 @@ export const CardWrapper = ({
 }: CardWrapperProps): ReactElement => {
   return (
     <Card className="w-[400px] shadow-md">
+      <CardTitle>
+        <Title label={titleLabel}/>
+      </CardTitle>
       <CardHeader>
         <Header label={headerLabel}/>
       </CardHeader>
