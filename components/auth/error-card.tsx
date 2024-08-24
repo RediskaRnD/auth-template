@@ -1,4 +1,3 @@
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { ReactElement } from 'react';
 
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';

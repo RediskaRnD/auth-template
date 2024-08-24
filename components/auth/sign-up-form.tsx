@@ -1,6 +1,5 @@
 'use client';
 
-import { SIGNIN_PAGE } from '@/routes';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
@@ -19,6 +18,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { SIGNIN_PAGE } from '@/routes';
 import { SignUpSchema } from '@/schemas';
 
 export const SignUpForm = (): ReactElement => {

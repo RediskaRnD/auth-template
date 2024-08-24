@@ -3,8 +3,8 @@
 import React, { ReactElement } from 'react';
 
 import { BackButton } from '@/components/auth/card-wrapper/back-button';
-import { Title } from '@/components/auth/card-wrapper/title';
 import { Header } from '@/components/auth/card-wrapper/header';
+import { Title } from '@/components/auth/card-wrapper/title';
 import { Social } from '@/components/auth/social';
 import {
   Card,

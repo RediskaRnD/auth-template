@@ -15,7 +15,7 @@ interface HeaderProps {
 export const Header = ({ label }: HeaderProps): ReactElement => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
-      <p className="text-muted-foreground text-sm">
+      <p className={cn('text-muted-foreground text-sm', font.className)}>
         {label}
       </p>
     </div>
