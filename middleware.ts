@@ -13,9 +13,9 @@ const { auth } = NextAuth(authConfig);
 export default auth((req): Response | void => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  console.log({ AUTH: req.auth });
-  console.log('ROUTE: ', req.url);
-  console.log('IS LOGGED IN: ', isLoggedIn);
+  console.log('URL: ', req.url);
+  console.log('Is logged in: ', isLoggedIn);
+  console.log('Auth: ', req.auth);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);

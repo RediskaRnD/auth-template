@@ -10,7 +10,7 @@ import { SignUpSchema } from '@/schemas';
 export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ error?: string, success?: string }> => {
   const validatedFields = SignUpSchema.safeParse(values);
 
-  console.log(values);
+  console.log('Form:', values);
 
   if (!validatedFields.success) {
     return { error: 'Sign up failed.' };

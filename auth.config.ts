@@ -9,8 +9,12 @@ import { SignInSchema } from '@/schemas';
 
 export default {
   providers: [
-    GitHub,
-    Google,
+    GitHub({
+      allowDangerousEmailAccountLinking: true
+    }),
+    Google( {
+      // allowDangerousEmailAccountLinking: true
+    }),
     Credentials({
       credentials: {
         username: { label: 'Username' },

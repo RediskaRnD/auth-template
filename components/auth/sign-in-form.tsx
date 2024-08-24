@@ -1,6 +1,7 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -18,10 +19,11 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { SIGNUP_PAGE } from '@/routes';
+import { SIGNIN_PAGE, SIGNUP_PAGE } from '@/routes';
 import { SignInSchema } from '@/schemas';
 
 export const SignInForm = (): ReactElement => {
+  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
@@ -32,9 +34,13 @@ export const SignInForm = (): ReactElement => {
       password: ''
     }
   });
+  const searchParams = useSearchParams();
+  const urlError = searchParams.get('error') === 'OAuthAccountNotLinked'
+    ? 'Email already in use with different provider!' : '';
 
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(() => {
+      router.replace(SIGNIN_PAGE);
       setError(undefined);
       setSuccess(undefined);
       login(values).then((data: { error?: string, success?: string } | void): void => {
@@ -98,7 +104,7 @@ export const SignInForm = (): ReactElement => {
             />
           </div>
           <SuccessMessage message={success}/>
-          <ErrorMessage message={error}/>
+          <ErrorMessage message={error || urlError}/>
           <Button
             type="submit"
             disabled={isPending}

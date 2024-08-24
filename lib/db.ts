@@ -1,11 +1,9 @@
-// import * as process from 'node:process';
 import { PrismaClient } from '@prisma/client';
 // import pg from 'pg';
 
 // const { Pool } = pg;
 
 declare global {
-   
   // var pgPool: pg.Pool | undefined;
   // eslint-disable-next-line no-var
   var prisma: PrismaClient | undefined;

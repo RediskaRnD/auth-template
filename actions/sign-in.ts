@@ -13,7 +13,7 @@ export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
 } | void> => {
   const validatedFields = SignInSchema.safeParse(values);
 
-  console.log(values);
+  console.log('Form:', values);
 
   if (!validatedFields.success) {
     return { error: 'Login failed.' };
