@@ -13,7 +13,7 @@ export default {
       allowDangerousEmailAccountLinking: true
     }),
     Google( {
-      // allowDangerousEmailAccountLinking: true
+      allowDangerousEmailAccountLinking: true
     }),
     Credentials({
       credentials: {

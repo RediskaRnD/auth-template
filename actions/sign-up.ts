@@ -5,6 +5,7 @@ import * as z from 'zod';
 
 import { getUserByEmail } from '@/data/user';
 import { prisma } from '@/lib/db';
+import { generateVerificationToken } from '@/lib/tokens';
 import { SignUpSchema } from '@/schemas';
 
 export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ error?: string, success?: string }> => {
@@ -43,9 +44,10 @@ export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<{ er
     }
     console.log('id: ', user.id);
 
-    // TODO: Send verification token email.
-
-    return { success: 'User created successfully.' };
+    const verificationToken = await generateVerificationToken(user.email);
+    console.log({ verificationToken });
+    
+    return { success: 'Confirmation email sent.' };
   } finally {
     // client.release();
   }
