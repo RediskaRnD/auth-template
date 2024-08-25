@@ -1,13 +1,15 @@
 'use server';
 
+import { ErrorMessage, SuccessMessage } from '@/actions/auth-messages';
+import { signIn } from '@/auth';
+import { getUserByEmail } from '@/data/user';
+import { generateVerificationToken } from '@/lib/tokens';
+import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
+import { SignInSchema } from '@/schemas';
 import { AuthError } from 'next-auth';
 import * as z from 'zod';
 
-import { signIn } from '@/auth';
-import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
-import { SignInSchema } from '@/schemas';
-
-export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
+export const signInCredentials = async (values: z.infer<typeof SignInSchema>): Promise<{
   error?: string,
   success?: string
 } | void> => {
@@ -16,9 +18,20 @@ export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
   console.log('Form:', values);
 
   if (!validatedFields.success) {
-    return { error: 'Login failed.' };
+    return ErrorMessage.LOGIN_FAILED;
   }
   const { email, password } = validatedFields.data;
+
+  const existingUser = await getUserByEmail(email);
+
+  if (!existingUser?.password) {
+    return ErrorMessage.INVALID_CREDENTIALS;
+  }
+
+  if (!existingUser.emailVerified) {
+    const verificationToken = await generateVerificationToken(email);
+    return SuccessMessage.CONFIRMATION_EMAIL_SENT;
+  }
 
   try {
     await signIn('credentials', {
@@ -29,9 +42,9 @@ export const login = async (values: z.infer<typeof SignInSchema>): Promise<{
   } catch (error) {
     if (error instanceof AuthError) {
       if (error.type === 'CredentialsSignin') {
-        return { error: 'Invalid credentials.' };
+        return ErrorMessage.INVALID_CREDENTIALS;
       }
-      return { error: 'Something went wrong.' };
+      return ErrorMessage.SOMETHING_WENT_WRONG;
     }
     // important! Don't remove it, otherwise you will not be redirected.
     throw error;

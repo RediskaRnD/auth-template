@@ -1,26 +1,18 @@
 'use client';
 
+import { signInCredentials } from '@/actions/sign-in';
+import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
+import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { SIGN_IN_PAGE, SIGN_UP_PAGE } from '@/routes';
+import { SignInSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
-
-import { login } from '@/actions/sign-in';
-import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
-import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
-import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { SIGNIN_PAGE, SIGNUP_PAGE } from '@/routes';
-import { SignInSchema } from '@/schemas';
 
 export const SignInForm = (): ReactElement => {
   const router = useRouter();
@@ -40,10 +32,10 @@ export const SignInForm = (): ReactElement => {
 
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(() => {
-      router.replace(SIGNIN_PAGE);
+      router.replace(SIGN_IN_PAGE);
       setError(undefined);
       setSuccess(undefined);
-      login(values).then((data: { error?: string, success?: string } | void): void => {
+      signInCredentials(values).then((data: { error?: string, success?: string } | void): void => {
         setError(data?.error);
         setSuccess(data?.success);
       });
@@ -55,7 +47,7 @@ export const SignInForm = (): ReactElement => {
       titleLabel="🔐 Auth"
       headerLabel="Welcome back"
       backButtonLabel="Don't have an account?"
-      backButtonHref={SIGNUP_PAGE}
+      backButtonHref={SIGN_UP_PAGE}
       showSocial
     >
       <Form {...form}>
@@ -104,7 +96,7 @@ export const SignInForm = (): ReactElement => {
             />
           </div>
           <SuccessMessage message={success}/>
-          <ErrorMessage message={error || urlError}/>
+          <ErrorMessage message={error ?? urlError}/>
           <Button
             type="submit"
             disabled={isPending}

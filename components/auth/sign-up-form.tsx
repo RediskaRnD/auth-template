@@ -1,25 +1,17 @@
 'use client';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ReactElement, useState, useTransition } from 'react';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-
 import { signUp } from '@/actions/sign-up';
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
 import { Button } from '@/components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { SIGNIN_PAGE } from '@/routes';
+import { SIGN_IN_PAGE } from '@/routes';
 import { SignUpSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ReactElement, useState, useTransition } from 'react';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
 
 export const SignUpForm = (): ReactElement => {
   const [isPending, startTransition] = useTransition();
@@ -50,7 +42,7 @@ export const SignUpForm = (): ReactElement => {
       titleLabel="🔐 Auth"
       headerLabel="Create an account"
       backButtonLabel="Already have an account?"
-      backButtonHref={SIGNIN_PAGE}
+      backButtonHref={SIGN_IN_PAGE}
       showSocial
     >
       <Form {...form}>

@@ -1,7 +1,6 @@
-import { ReactElement } from 'react';
-
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
-import { SIGNIN_PAGE } from '@/routes';
+import { SIGN_IN_PAGE } from '@/routes';
+import { ReactElement } from 'react';
 
 
 export const ErrorCard = (): ReactElement => {
@@ -10,7 +9,7 @@ export const ErrorCard = (): ReactElement => {
       titleLabel="🔐 Auth"
       headerLabel="Oops! Something went wrong!"
       backButtonLabel="Back to Sign in"
-      backButtonHref={SIGNIN_PAGE}
+      backButtonHref={SIGN_IN_PAGE}
     >
       ⛔ Error
     </CardWrapper>

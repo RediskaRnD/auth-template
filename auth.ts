@@ -1,13 +1,12 @@
+import authConfig from '@/auth.config';
+import { getUserById } from '@/data/user';
+import { prisma } from '@/lib/db';
+import { ERROR_PAGE, SIGN_IN_PAGE } from '@/routes';
 import { JWT } from '@auth/core/jwt';
 import { DefaultSession } from '@auth/core/types';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { UserRole } from '@prisma/client';
 import NextAuth, { Session } from 'next-auth';
-
-import authConfig from '@/auth.config';
-import { getUserById } from '@/data/user';
-import { prisma } from '@/lib/db';
-import { ERROR_PAGE, SIGNIN_PAGE } from '@/routes';
 
 declare module 'next-auth' {
   /**
@@ -39,7 +38,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   debug: process.env.NODE_ENV !== 'production',
   adapter: PrismaAdapter(prisma),
   pages: {
-    signIn: SIGNIN_PAGE,
+    signIn: SIGN_IN_PAGE,
     error: ERROR_PAGE
   },
   logger: {
@@ -59,14 +58,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     }
   },
   callbacks: {
-    // async signIn({ user }): Promise<boolean> {
-    //   console.log('cb::signIn');
-    //   if (user.id) {
-    //     const existingUser = await getUserById(user.id);
-    //     return !!existingUser?.emailVerified;
-    //   }
-    //   return false;
-    // },
+    async signIn({ user, account }): Promise<boolean> {
+      console.log('cb::signIn');
+      // Allow OAuth without email verification
+      if (account?.provider === 'credentials') {
+        if (user.id) {
+          const existingUser = await getUserById(user.id);
+          if (!existingUser?.emailVerified) {
+            return false;
+          }
+          // TODO: Add 2FA check
+        }
+      }
+      return true;
+    },
     async jwt({ token, user }): Promise<JWT> {
       console.log('cb::jwt');
       console.log({ token });

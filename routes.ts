@@ -2,8 +2,8 @@
  * The default redirect path after logged in
  */
 export const DEFAULT_LOGIN_REDIRECT = '/settings';
-export const SIGNIN_PAGE = '/auth/sign-in';
-export const SIGNUP_PAGE = '/auth/sign-up';
+export const SIGN_IN_PAGE = '/auth/sign-in';
+export const SIGN_UP_PAGE = '/auth/sign-up';
 export const ERROR_PAGE = '/auth/error';
 
 /**
@@ -19,8 +19,8 @@ export const publicRoutes = [
  * These routes will redirect logged-in users to DEFAULT_LOGIN_REDIRECT.
  */
 export const authRoutes = [
-  SIGNIN_PAGE,
-  SIGNUP_PAGE,
+  SIGN_IN_PAGE,
+  SIGN_UP_PAGE,
   ERROR_PAGE
 ];
 

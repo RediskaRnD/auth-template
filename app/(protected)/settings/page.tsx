@@ -1,9 +1,8 @@
-import type { Metadata } from 'next';
-import { ReactElement } from 'react';
-
 import { auth, signOut } from '@/auth';
 import { Button } from '@/components/ui/button';
-import { SIGNIN_PAGE } from '@/routes';
+import { SIGN_IN_PAGE } from '@/routes';
+import type { Metadata } from 'next';
+import { ReactElement } from 'react';
 
 export const metadata: Metadata = {
   title: 'Settings',
@@ -19,7 +18,7 @@ const SettingsPage = async (): Promise<ReactElement> => {
       <form action={async () => {
         'use server';
 
-        await signOut({ redirectTo: SIGNIN_PAGE });
+        await signOut({ redirectTo: SIGN_IN_PAGE });
       }}>
         <Button type="submit">
           Sign Out

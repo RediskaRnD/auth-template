@@ -1,9 +1,8 @@
 'use client';
 
+import { SIGN_IN_PAGE } from '@/routes';
 import { useRouter } from 'next/navigation';
 import { ReactElement, ReactNode } from 'react';
-
-import { SIGNIN_PAGE } from '@/routes';
 
 interface LoginButtonProps {
   children: ReactNode;
@@ -20,7 +19,7 @@ export const LoginButton = ({
 
   const onClick = () => {
     console.log('Login button clicked');
-    router.push(SIGNIN_PAGE);
+    router.push(SIGN_IN_PAGE);
   };
 
   if (mode === 'modal') {
