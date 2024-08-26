@@ -5,13 +5,14 @@ export const DEFAULT_LOGIN_REDIRECT = '/settings';
 export const SIGN_IN_PAGE = '/auth/sign-in';
 export const SIGN_UP_PAGE = '/auth/sign-up';
 export const ERROR_PAGE = '/auth/error';
-
+export const EMAIL_VERIFICATION_PAGE = '/auth/email-verification';
 /**
  * An array of routes that are accessible to the public.
  * These routes do not require authentication.
  */
 export const publicRoutes = [
-  '/'
+  '/',
+  EMAIL_VERIFICATION_PAGE
 ];
 
 /**

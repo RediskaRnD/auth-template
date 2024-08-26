@@ -1,22 +1,23 @@
 'use client';
 
-import { signUp } from '@/actions/sign-up';
-import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
-import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { SIGN_IN_PAGE } from '@/routes';
-import { SignUpSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { ResultMessage } from '@/actions/auth-messages';
+import { signUp } from '@/actions/sign-up';
+import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
+import { FormErrorMessage, FormSuccessMessage } from '@/components/form-messages';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { SIGN_IN_PAGE } from '@/routes';
+import { SignUpSchema } from '@/schemas';
+
 export const SignUpForm = (): ReactElement => {
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
+  const [resultMessage, setResultMessage] = useState<ResultMessage | undefined>();
   const form = useForm<z.infer<typeof SignUpSchema>>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -28,12 +29,11 @@ export const SignUpForm = (): ReactElement => {
 
   const onSubmit = (values: z.infer<typeof SignUpSchema>) => {
     startTransition(() => {
-      setError(undefined);
-      setSuccess(undefined);
-      signUp(values).then((data: { error?: string, success?: string }): void => {
-        setError(data.error);
-        setSuccess(data.success);
-      });
+      setResultMessage(undefined);
+      signUp(values)
+        .then((resultMessage: ResultMessage) => {
+          setResultMessage(resultMessage);
+        });
     });
   };
 
@@ -109,8 +109,8 @@ export const SignUpForm = (): ReactElement => {
               )}
             />
           </div>
-          <SuccessMessage message={success}/>
-          <ErrorMessage message={error}/>
+          <FormSuccessMessage message={resultMessage?.success}/>
+          <FormErrorMessage message={resultMessage?.error}/>
           <Button
             type="submit"
             disabled={isPending}

@@ -1,6 +1,7 @@
+import { ReactElement } from 'react';
+
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { SIGN_IN_PAGE } from '@/routes';
-import { ReactElement } from 'react';
 
 
 export const ErrorCard = (): ReactElement => {

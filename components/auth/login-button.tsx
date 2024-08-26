@@ -1,8 +1,9 @@
 'use client';
 
-import { SIGN_IN_PAGE } from '@/routes';
 import { useRouter } from 'next/navigation';
 import { ReactElement, ReactNode } from 'react';
+
+import { SIGN_IN_PAGE } from '@/routes';
 
 interface LoginButtonProps {
   children: ReactNode;

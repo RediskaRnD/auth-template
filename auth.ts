@@ -1,12 +1,13 @@
-import authConfig from '@/auth.config';
-import { getUserById } from '@/data/user';
-import { prisma } from '@/lib/db';
-import { ERROR_PAGE, SIGN_IN_PAGE } from '@/routes';
 import { JWT } from '@auth/core/jwt';
 import { DefaultSession } from '@auth/core/types';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { UserRole } from '@prisma/client';
 import NextAuth, { Session } from 'next-auth';
+
+import authConfig from '@/auth.config';
+import { getUserById } from '@/data/user';
+import { prisma } from '@/lib/db';
+import { ERROR_PAGE, SIGN_IN_PAGE } from '@/routes';
 
 declare module 'next-auth' {
   /**
@@ -60,6 +61,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account }): Promise<boolean> {
       console.log('cb::signIn');
+      console.log({ user, account });
       // Allow OAuth without email verification
       if (account?.provider === 'credentials') {
         if (user.id) {

@@ -14,7 +14,7 @@ export default [
       'node_modules/**',
       '.next/**',
       'next.config.mjs',
-      'components/ui/*.tsx'
+      'components/ui/*.tsx',
     ],
   },
   {
@@ -31,11 +31,11 @@ export default [
         jsdom: true,
         JSX: true,
         ...globals.browser,
-        ...globals.node
+        ...globals.node,
       },
       parserOptions: {
         sourceType: 'module',
-        ecmaVersion: 'latest'
+        ecmaVersion: 'latest',
       },
     },
   },
@@ -57,6 +57,20 @@ export default [
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      // 'import/order': [
+      //   'warn',
+      //   {
+      //     'groups': [
+      //       'external',
+      //       'builtin',
+      //       'internal',
+      //       'parent',
+      //       'sibling',
+      //       'index',
+      //     ],
+      //     'newlines-between': 'always',
+      //   },
+      // ],
       // 'import/first': 'error',
       // 'import/newline-after-import': 'error',
       // 'import/no-duplicates': 'error',

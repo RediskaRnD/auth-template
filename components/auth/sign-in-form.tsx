@@ -1,24 +1,26 @@
 'use client';
 
-import { signInCredentials } from '@/actions/sign-in';
-import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
-import { ErrorMessage, SuccessMessage } from '@/components/form-messages';
-import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { SIGN_IN_PAGE, SIGN_UP_PAGE } from '@/routes';
-import { SignInSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { ResultMessage } from '@/actions/auth-messages';
+import { signInCredentials } from '@/actions/sign-in';
+import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
+import { FormErrorMessage, FormSuccessMessage } from '@/components/form-messages';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { SIGN_IN_PAGE, SIGN_UP_PAGE } from '@/routes';
+import { SignInSchema } from '@/schemas';
+
 export const SignInForm = (): ReactElement => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
+  const [resultMessage, setResultMessage] = useState<ResultMessage | undefined>();
+
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -33,12 +35,11 @@ export const SignInForm = (): ReactElement => {
   const onSubmit = (values: z.infer<typeof SignInSchema>) => {
     startTransition(() => {
       router.replace(SIGN_IN_PAGE);
-      setError(undefined);
-      setSuccess(undefined);
-      signInCredentials(values).then((data: { error?: string, success?: string } | void): void => {
-        setError(data?.error);
-        setSuccess(data?.success);
-      });
+      setResultMessage(undefined);
+      signInCredentials(values)
+        .then((resultMessage: ResultMessage) => {
+          setResultMessage(resultMessage);
+        });
     });
   };
 
@@ -95,8 +96,8 @@ export const SignInForm = (): ReactElement => {
               )}
             />
           </div>
-          <SuccessMessage message={success}/>
-          <ErrorMessage message={error ?? urlError}/>
+          <FormSuccessMessage message={resultMessage?.success}/>
+          <FormErrorMessage message={resultMessage?.error ?? urlError}/>
           <Button
             type="submit"
             disabled={isPending}

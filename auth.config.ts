@@ -12,7 +12,7 @@ export default {
     GitHub({
       allowDangerousEmailAccountLinking: true
     }),
-    Google( {
+    Google({
       allowDangerousEmailAccountLinking: true
     }),
     Credentials({
@@ -30,13 +30,17 @@ export default {
           // if (client) {
           //   try {
           //     const user = await getUserByEmail(client, { email });
-          const user = await getUserByEmail(email);
-          if (!user?.password) {
+          const existingUser = await getUserByEmail(email);
+          if (!existingUser?.password) {
             return null;
           }
-          const passwordMatched = await bcrypt.compare(password, user.password);
+          const passwordMatched = await bcrypt.compare(password, existingUser.password);
           if (passwordMatched) {
-            return { id: user.id.toString(), name: user.name ?? null, email: user.email };
+            return {
+              id: existingUser.id.toString(),
+              name: existingUser.name ?? null,
+              email: existingUser.email
+            };
           }
           //   } finally {
           //     client.release();
