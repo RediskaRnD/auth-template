@@ -4,15 +4,14 @@ import { useSearchParams } from 'next/navigation';
 import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 
-import { ResultMessage } from '@/actions/auth-messages';
+import { ErrorMessage, ResultMessage } from '@/actions/auth-messages';
 import { emailVerification } from '@/actions/email-verification';
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { FormErrorMessage, FormSuccessMessage } from '@/components/form-messages';
 import { SIGN_IN_PAGE } from '@/routes';
 
 export const EmailVerificationForm = (): ReactElement => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
+  const [resultMessage, setResultMessage] = useState<ResultMessage | undefined>();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -21,15 +20,13 @@ export const EmailVerificationForm = (): ReactElement => {
     if (token) {
       emailVerification(token)
         .then((resultMessage: ResultMessage) => {
-          setSuccess(resultMessage.success);
-          setError(resultMessage.error);
+          setResultMessage(resultMessage);
         })
         .catch(() => {
-          setSuccess(undefined);
-          setError('Something went wrong!');
+          setResultMessage(ErrorMessage.SOMETHING_WENT_WRONG);
         });
     } else {
-      setError('Missing token!');
+      setResultMessage(ErrorMessage.SOMETHING_WENT_WRONG);
     }
   }, [token]);
 
@@ -45,10 +42,10 @@ export const EmailVerificationForm = (): ReactElement => {
       backButtonHref={SIGN_IN_PAGE}
     >
       <div className="flex w-full items-center justify-center">
-        {success || error ?
+        {resultMessage ?
           <>
-            <FormSuccessMessage message={success}/>
-            <FormErrorMessage message={error}/>
+            <FormSuccessMessage message={resultMessage?.success}/>
+            <FormErrorMessage message={resultMessage?.error}/>
           </>
           : <BeatLoader/>
         }

@@ -15,10 +15,14 @@ export const sendVerificationEmail = async (
   }
   const confirmationUrl = new URL(EMAIL_VERIFICATION_PAGE, process.env.AUTH_URL);
   confirmationUrl.searchParams.append('token', encodeURIComponent(token));
-  console.log({ confirmationUrl });
+  console.log('Confirmation URL: ', confirmationUrl);
 
+  const resendEmail = process.env.RESEND_EMAIL;
+  if (!resendEmail) {
+    throw new Error('RESEND_EMAIL is not defined in environment variables.');
+  }
   await resend.emails.send({
-    from: 'onboarding@resend.liaw',
+    from: resendEmail,
     to: email,
     subject: 'Confirm your email',
     html: `<p>Click <a href="${confirmationUrl}">here</a> to confirm email.</p>`

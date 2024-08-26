@@ -1,4 +1,6 @@
-import { ErrorMessages, ResultMessage } from '@/actions/auth-messages';
+'use server';
+
+import { ErrorMessage, ResultMessage } from '@/actions/auth-messages';
 import { getUserByEmail } from '@/data/user';
 import { getVerificationTokenByToken } from '@/data/verification-token';
 import { prisma } from '@/lib/db';
@@ -22,17 +24,17 @@ export const emailVerification = async (token: string): Promise<ResultMessage> =
   const existingToken = await getVerificationTokenByToken(token);
 
   if (!existingToken) {
-    return ErrorMessages.TOKEN_DOES_NOT_EXIST;
+    return ErrorMessage.TOKEN_DOES_NOT_EXIST;
   }
 
   const hasExpired = new Date(existingToken.expires) < new Date();
   if (hasExpired) {
-    return ErrorMessages.TOKEN_HAS_EXPIRED;
+    return ErrorMessage.TOKEN_HAS_EXPIRED;
   }
 
   const existingUser = await getUserByEmail(existingToken.email);
   if (!existingUser) {
-    return ErrorMessages.USER_DOES_NOT_EXIST;
+    return ErrorMessage.USER_DOES_NOT_EXIST;
   }
 
   await setEmailVerified(existingUser.id);
