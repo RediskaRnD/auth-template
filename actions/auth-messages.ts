@@ -19,12 +19,14 @@ export const ErrorMessage = {
   TOKEN_HAS_EXPIRED: { error: 'Token has expired!' } as ErrorMessageType,
   USER_DOES_NOT_EXIST: { error: 'User does not exist!' } as ErrorMessageType,
   UNABLE_TO_CONNECT_TO_DATABASE: { error: 'Unable to connect to database.' } as ErrorMessageType,
-  MISSING_TOKEN: { error: 'Missing token!' } as ErrorMessageType
+  MISSING_TOKEN: { error: 'Missing token!' } as ErrorMessageType,
+  INVALID_EMAIL: { error: 'Invalid email!' } as ErrorMessageType
 } as const;
 
 export const SuccessMessages = {
   SIGN_IN_SUCCESS: { success: 'Sign in successful! Welcome back.' } as SuccessMessageType,
-  CONFIRMATION_EMAIL_SENT: { success: 'Confirmation email sent.' } as SuccessMessageType
+  CONFIRMATION_EMAIL_SENT: { success: 'Confirmation email sent.' } as SuccessMessageType,
+  RESET_EMAIL_SENT: { success: 'Reset password sent to email.' } as SuccessMessageType
 } as const;
 
 export type ResultMessage = ErrorMessageType | SuccessMessageType;
