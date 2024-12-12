@@ -14,7 +14,7 @@ import { FormErrorMessage, FormSuccessMessage } from '@/components/form-messages
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { AUTH_RESET_PAGE, SIGN_IN_PAGE, SIGN_UP_PAGE } from '@/routes';
+import { RESET_PASSWORD_PAGE, SIGN_IN_PAGE, SIGN_UP_PAGE } from '@/routes';
 import { SignInSchema } from '@/schemas';
 
 export const SignInForm = (): ReactElement => {
@@ -98,7 +98,7 @@ export const SignInForm = (): ReactElement => {
                     asChild
                     className="px-0 font-normal"
                   >
-                    <Link href={AUTH_RESET_PAGE}>
+                    <Link href={RESET_PASSWORD_PAGE}>
                       Forgot password?
                     </Link>
                   </Button>

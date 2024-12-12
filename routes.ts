@@ -4,8 +4,8 @@
 export const DEFAULT_LOGIN_REDIRECT = '/settings';
 export const SIGN_IN_PAGE = '/auth/sign-in';
 export const SIGN_UP_PAGE = '/auth/sign-up';
-export const AUTH_RESET_PAGE = '/auth/reset';
 export const ERROR_PAGE = '/auth/error';
+export const RESET_PASSWORD_PAGE = '/auth/reset-password';
 export const EMAIL_VERIFICATION_PAGE = '/auth/email-verification';
 /**
  * An array of routes that are accessible to the public.
@@ -13,6 +13,7 @@ export const EMAIL_VERIFICATION_PAGE = '/auth/email-verification';
  */
 export const publicRoutes = [
   '/',
+  '/map',
   EMAIL_VERIFICATION_PAGE
 ];
 
@@ -23,7 +24,7 @@ export const publicRoutes = [
 export const authRoutes = [
   SIGN_IN_PAGE,
   SIGN_UP_PAGE,
-  AUTH_RESET_PAGE,
+  RESET_PASSWORD_PAGE,
   ERROR_PAGE
 ];
 

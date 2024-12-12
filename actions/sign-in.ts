@@ -4,9 +4,10 @@ import bcrypt from 'bcryptjs';
 import { AuthError } from 'next-auth';
 import * as z from 'zod';
 
-import { ErrorMessage, ResultMessage, SuccessMessages } from '@/actions/auth-messages';
+import { ErrorMessage, ResultMessage, SuccessMessage } from '@/actions/auth-messages';
 import { signIn } from '@/auth';
 import { getUserByEmail } from '@/data/user';
+import { sendVerificationEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/tokens';
 import { DEFAULT_LOGIN_REDIRECT } from '@/routes';
 import { SignInSchema } from '@/schemas';
@@ -33,7 +34,11 @@ export const signInCredentials = async (values: z.infer<typeof SignInSchema>): P
 
   if (!existingUser.emailVerified) {
     const verificationToken = await generateVerificationToken(email);
-    return SuccessMessages.CONFIRMATION_EMAIL_SENT;
+    console.log({ verificationToken });
+
+    await sendVerificationEmail(email, verificationToken.token);
+
+    return SuccessMessage.CONFIRMATION_EMAIL_SENT;
   }
 
   try {
@@ -42,7 +47,7 @@ export const signInCredentials = async (values: z.infer<typeof SignInSchema>): P
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT
     });
-    return SuccessMessages.SIGN_IN_SUCCESS;
+    return SuccessMessage.SIGN_IN_SUCCESS;
   } catch (error) {
     if (error instanceof AuthError) {
       if (error.type === 'CredentialsSignin') {

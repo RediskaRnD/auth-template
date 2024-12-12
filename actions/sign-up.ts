@@ -3,7 +3,7 @@
 import bcrypt from 'bcryptjs';
 import * as z from 'zod';
 
-import { ErrorMessage, ResultMessage, SuccessMessages } from '@/actions/auth-messages';
+import { ErrorMessage, ResultMessage, SuccessMessage } from '@/actions/auth-messages';
 import { getUserByEmail } from '@/data/user';
 import { prisma } from '@/lib/db';
 import { sendVerificationEmail } from '@/lib/mail';
@@ -43,5 +43,5 @@ export const signUp = async (values: z.infer<typeof SignUpSchema>): Promise<Resu
 
   await sendVerificationEmail(email, verificationToken.token);
 
-  return SuccessMessages.CONFIRMATION_EMAIL_SENT;
+  return SuccessMessage.CONFIRMATION_EMAIL_SENT;
 };

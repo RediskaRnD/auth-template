@@ -1,46 +1,34 @@
 type ErrorMessageType = {
   error: string;
-  success?: never;
+  success?: undefined;
 }
 
 type SuccessMessageType = {
   success: string;
-  error?: never;
+  error?: undefined;
 }
 
 export const ErrorMessage = {
-  EMAIL_ALREADY_IN_USE: { error: 'Email already in use.' } as ErrorMessageType,
-  FAILED_TO_CREATE_USER: { error: 'Failed to create new user.' } as ErrorMessageType,
-  INVALID_CREDENTIALS: { error: 'Invalid credentials!' } as ErrorMessageType,
-  LOGIN_FAILED: { error: 'Login failed.' } as ErrorMessageType,
-  SIGN_UP_FAILED: { error: 'Sign up failed.' } as ErrorMessageType,
-  SOMETHING_WENT_WRONG: { error: 'Something went wrong.' } as ErrorMessageType,
-  TOKEN_DOES_NOT_EXIST: { error: 'Token does not exist!' } as ErrorMessageType,
-  TOKEN_HAS_EXPIRED: { error: 'Token has expired!' } as ErrorMessageType,
-  USER_DOES_NOT_EXIST: { error: 'User does not exist!' } as ErrorMessageType,
-  UNABLE_TO_CONNECT_TO_DATABASE: { error: 'Unable to connect to database.' } as ErrorMessageType,
-  MISSING_TOKEN: { error: 'Missing token!' } as ErrorMessageType,
-  INVALID_EMAIL: { error: 'Invalid email!' } as ErrorMessageType
-} as const;
+  EMAIL_ALREADY_IN_USE: { error: 'Email already in use.' },
+  FAILED_TO_CREATE_USER: { error: 'Failed to create new user.' },
+  INVALID_CREDENTIALS: { error: 'Invalid credentials.' },
+  LOGIN_FAILED: { error: 'Login failed.' },
+  SIGN_UP_FAILED: { error: 'Sign up failed.' },
+  SOMETHING_WENT_WRONG: { error: 'Something went wrong.' },
+  TOKEN_DOES_NOT_EXIST: { error: 'Token does not exist.' },
+  TOKEN_HAS_EXPIRED: { error: 'Token has expired.' },
+  USER_DOES_NOT_EXIST: { error: 'User does not exist.' },
+  UNABLE_TO_CONNECT_TO_DATABASE: { error: 'Unable to connect to database.' },
+  MISSING_TOKEN: { error: 'Missing token.' },
+  INVALID_EMAIL: { error: 'Invalid email.' }
+} as const satisfies Record<string, ErrorMessageType>;
 
-export const SuccessMessages = {
-  SIGN_IN_SUCCESS: { success: 'Sign in successful! Welcome back.' } as SuccessMessageType,
-  CONFIRMATION_EMAIL_SENT: { success: 'Confirmation email sent.' } as SuccessMessageType,
-  RESET_EMAIL_SENT: { success: 'Reset password sent to email.' } as SuccessMessageType
-} as const;
+export const SuccessMessage = {
+  WAITING: { success: '' },
+  SIGN_IN_SUCCESS: { success: 'Sign in successful! Welcome back.' },
+  CONFIRMATION_EMAIL_SENT: { success: 'Confirmation email sent!' },
+  RESET_EMAIL_SENT: { success: 'If an account with that email exists, you will receive a password reset link shortly.' },
+  EMAIL_VERIFIED: { success: 'Email verified!' }
+} as const satisfies Record<string, SuccessMessageType>;
 
 export type ResultMessage = ErrorMessageType | SuccessMessageType;
-
-
-// type CatName = 'miffy' | 'boris' | 'mordred';
-//
-// interface CatInfo {
-//   age: number;
-//   breed: string;
-// }
-//
-// const cats: Record<CatName, CatInfo> = {
-//   miffy: { age: 10, breed: 'Persian' },
-//   boris: { age: 5, breed: 'Maine Coon' },
-//   mordred: { age: 16, breed: 'British Shorthair' }
-// };

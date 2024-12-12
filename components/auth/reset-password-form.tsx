@@ -3,10 +3,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ReactElement, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
+import { BeatLoader } from 'react-spinners';
 import * as z from 'zod';
 
-import { ResultMessage } from '@/actions/auth-messages';
-import { reset } from '@/actions/reset';
+import { ResultMessage, SuccessMessage } from '@/actions/auth-messages';
+import { resetPassword } from '@/actions/reset-password';
 import { CardWrapper } from '@/components/auth/card-wrapper/card-wrapper';
 import { FormErrorMessage, FormSuccessMessage } from '@/components/form-messages';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { SIGN_IN_PAGE } from '@/routes';
 import { ResetSchema } from '@/schemas';
 
-export const ResetForm = (): ReactElement => {
+export const ResetPasswordForm = (): ReactElement => {
   const [isPending, startTransition] = useTransition();
   const [resultMessage, setResultMessage] = useState<ResultMessage | undefined>();
 
@@ -28,9 +29,9 @@ export const ResetForm = (): ReactElement => {
 
   const onSubmit = (values: z.infer<typeof ResetSchema>) => {
     console.log({ values });
+    setResultMessage(SuccessMessage.WAITING);
     startTransition(() => {
-      setResultMessage(undefined);
-      reset(values)
+      resetPassword(values)
         .then((resultMessage: ResultMessage) => {
           setResultMessage(resultMessage);
         });
@@ -70,8 +71,15 @@ export const ResetForm = (): ReactElement => {
               )}
             />
           </div>
-          <FormSuccessMessage message={resultMessage?.success}/>
-          <FormErrorMessage message={resultMessage?.error}/>
+          <div className="flex w-full items-center justify-center">
+            {resultMessage === SuccessMessage.WAITING ?
+              <BeatLoader/>
+              : <>
+                <FormSuccessMessage message={resultMessage?.success}/>
+                <FormErrorMessage message={resultMessage?.error}/>
+              </>
+            }
+          </div>
           <Button
             type="submit"
             disabled={isPending}

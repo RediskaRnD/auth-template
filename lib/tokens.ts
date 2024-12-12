@@ -5,6 +5,8 @@ import { getPasswordResetTokenByEmail } from '@/data/password-reset-token';
 import { getVerificationTokenByEmail } from '@/data/verification-token';
 import { prisma } from '@/lib/db';
 
+const HOUR = 60 * 60 * 1000;  // one hour in ms
+
 export const generatePasswordResetToken = async (email: string): Promise<PasswordResetToken> => {
   const existingToken = await getPasswordResetTokenByEmail(email);
   if (existingToken) {
@@ -14,8 +16,7 @@ export const generatePasswordResetToken = async (email: string): Promise<Passwor
   }
 
   const token = uuidv4();
-  const hours = 1;
-  const expires = new Date(new Date().getTime() + hours * 60 * 60 * 1000);
+  const expires = new Date(new Date().getTime() + HOUR);
   return prisma.passwordResetToken.create({
     data: {
       email,
@@ -32,11 +33,11 @@ export const generateVerificationToken = async (email: string): Promise<Verifica
     await prisma.verificationToken.delete({
       where: { id: existingToken.id }
     });
+    console.log('Existing token is deleted: ', existingToken.token);
   }
 
   const token = uuidv4();
-  const hours = 1;
-  const expires = new Date(new Date().getTime() + hours * 60 * 60 * 1000);
+  const expires = new Date(new Date().getTime() + HOUR);
   return prisma.verificationToken.create({
     data: {
       email,

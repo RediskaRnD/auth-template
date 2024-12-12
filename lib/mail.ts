@@ -2,7 +2,7 @@ import * as process from 'node:process';
 
 import { Resend } from 'resend';
 
-import { EMAIL_VERIFICATION_PAGE } from '@/routes';
+import { EMAIL_VERIFICATION_PAGE, RESET_PASSWORD_PAGE } from '@/routes';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -21,10 +21,35 @@ export const sendVerificationEmail = async (
   if (!resendEmail) {
     throw new Error('RESEND_EMAIL is not defined in environment variables.');
   }
+
   await resend.emails.send({
     from: resendEmail,
     to: email,
     subject: 'Confirm your email',
     html: `<p>Click <a href="${confirmationUrl}">here</a> to confirm email.</p>`
+  });
+};
+
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string
+): Promise<void> => {
+  if (!process.env.AUTH_URL) {
+    throw new Error('AUTH_URL is not defined in environment variables.');
+  }
+  const resetUrl = new URL(RESET_PASSWORD_PAGE, process.env.AUTH_URL);
+  resetUrl.searchParams.append('token', encodeURIComponent(token));
+  console.log('Password resetPassword URL: ', resetUrl);
+
+  const resendEmail = process.env.RESEND_EMAIL;
+  if (!resendEmail) {
+    throw new Error('RESEND_EMAIL is not defined in environment variables.');
+  }
+
+  await resend.emails.send({
+    from: resendEmail,
+    to: email,
+    subject: 'Reset your password',
+    html: `<p>Click <a href="${resetUrl}">here</a> to reset password.</p>`
   });
 };

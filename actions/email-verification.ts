@@ -1,6 +1,6 @@
 'use server';
 
-import { ErrorMessage, ResultMessage } from '@/actions/auth-messages';
+import { ErrorMessage, ResultMessage, SuccessMessage } from '@/actions/auth-messages';
 import { getUserByEmail } from '@/data/user';
 import { getVerificationTokenByToken } from '@/data/verification-token';
 import { prisma } from '@/lib/db';
@@ -40,6 +40,6 @@ export const emailVerification = async (token: string): Promise<ResultMessage> =
   await setEmailVerified(existingUser.id);
   await deleteVerificationTokenById(existingToken.id);
 
-  return { success: 'Email verified!' };
+  return SuccessMessage.EMAIL_VERIFIED;
 };
 
