@@ -50,9 +50,15 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ]
   },
   "include": [
+    "src",
+    "types.d.ts",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",

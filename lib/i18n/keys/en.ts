@@ -1,0 +1,31 @@
+export const en = {
+  'test': 'Testing',
+  'case.symbols': 'Symbols',
+  'case.words': 'Words',
+  'case.sentences': 'Sentences',
+  'case.lines': 'Lines',
+
+  'case.undo': 'Undo',
+  'case.redo': 'Redo',
+  'case.copy': 'Copy to Clipboard',
+  'case.save': 'Save File',
+  'case.open': 'Open File',
+  'case.clear': 'Clear',
+
+  'case.text.placeholder': 'Drag text file, type or paste your content here',
+  'case.text.placeholder.dragover': 'Drop the file here',
+  'case.sentence': 'Sentence case',
+  'case.sentence.tip': 'Convert text to sentence case, where only the first letter of the first word is capitalized.',
+  'case.upper': 'UPPER CASE',
+  'case.upper.tip': 'Convert text to uppercase, where all letters are capitalized.',
+  'case.lower': 'lower case',
+  'case.lower.tip': 'Convert text to lowercase, where all letters are in small case.',
+  'case.capitalized': 'Capitalized Case',
+  'case.capitalized.tip': 'Capitalize the first letter of each word.',
+  'case.title': 'Title Case',
+  'case.title.tip': 'Capitalize the first letter of each major word, excluding short articles, prepositions, and conjunctions.',
+  'case.trim.spaces': 'Trim spaces',
+  'case.trim.spaces.tip': 'Remove extra spaces from the beginning and end of the text.',
+  'case.remove.empty.lines': 'Remove empty lines',
+  'case.remove.empty.lines.tip': 'Delete all empty lines from the text.'
+};

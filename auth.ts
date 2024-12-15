@@ -28,13 +28,6 @@ declare module 'next-auth' {
   }
 }
 
-declare module '@auth/core/jwt' {
-  /** Returned by the `jwt` callback and `auth`, when using JWT sessions */
-  interface JWT {
-    role: UserRole | undefined;
-  }
-}
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
   debug: process.env.NODE_ENV !== 'production',
   adapter: PrismaAdapter(prisma),

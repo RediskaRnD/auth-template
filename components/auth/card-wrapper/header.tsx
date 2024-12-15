@@ -1,7 +1,7 @@
 import { Poppins } from 'next/font/google';
 import { ReactElement } from 'react';
 
-import { cn } from '@/lib/utils/utils';
+import { cn } from '@/lib/utils/tailwind';
 
 const font = Poppins({
   subsets: ['latin'],

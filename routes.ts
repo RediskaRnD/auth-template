@@ -14,6 +14,7 @@ export const EMAIL_VERIFICATION_PAGE = '/auth/email-verification';
 export const publicRoutes = [
   '/',
   '/map',
+  '/case',
   EMAIL_VERIFICATION_PAGE
 ];
 

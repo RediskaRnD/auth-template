@@ -1,8 +1,17 @@
-export const getTextStats = (text: string): { symbols: number, words: number, sentences: number, lines: number } => {
+import { titleCase } from 'title-case';
+
+export type TextStats = {
+  symbols: number;
+  words: number;
+  sentences: number;
+  lines: number;
+};
+
+export const getTextStats = (text: string): TextStats => {
   const symbols = text.length;
-  const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+  const words = text.trim() ? text.trim().split(/\s+/g).length : 0;
   const sentences = text.match(/[^.!?]*[.!?]*\s*/g)?.filter((s) => s.trim().length > 0).length ?? 0;
-  const lines = text.split('\n').length;
+  const lines = text ? text.split('\n').length : 0;
 
   return { symbols, words, sentences, lines };
 };
@@ -17,26 +26,25 @@ export const toSentenceCase = (text: string): string => {
     .join('');
 };
 
+export const toUpperCase = (text: string): string => {
+  return text.toUpperCase();
+};
+
+export const toLowerCase = (text: string): string => {
+  return text.toLowerCase();
+};
+
 export const toCapitalizedCase = (text: string): string => {
   if (!text) return '';
   return text
-    .split(/(\s+)/) // Split by spaces, preserving them as separate tokens
+    .split(/(\s+)/g) // Split by spaces, preserving them as separate tokens
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
     .join('');
 };
 
-
 export const toTitleCase = (text: string): string => {
   if (!text) return '';
-  const smallWords = new Set(['a', 'an', 'and', 'the', 'of', 'in', 'on', 'at', 'by', 'for', 'with', 'to', 'from']);
-  return text
-    .split(/(\s+)/) // Split by spaces, preserving them as separate tokens
-    .map((word, index) =>
-      smallWords.has(word.toLowerCase()) && index !== 0
-        ? word.toLowerCase()
-        : word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    )
-    .join('');
+  return titleCase(text.toLowerCase());
 };
 
 /**
@@ -47,5 +55,13 @@ export const toTitleCase = (text: string): string => {
  */
 export const removeExcessiveSpaces = (text: string): string => {
   if (!text) return '';
-  return text.replace(/\s+/g, ' ').trim();
+  return text
+    .replace(/[^\S\r\n]+/g, ' ')
+    .trim();
+};
+
+export const removeEmptyLines = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/^[\r\t\f\v ]*\n/gm, '');
 };

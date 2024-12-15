@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 // Function to extract IDs from the file
-function extractIDsFromFile(filePath: string, outputFilePath: string): void {
+const extractIDsFromFile = (filePath: string, outputFilePath: string) => {
   // Read the content of the file
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
@@ -22,7 +22,7 @@ function extractIDsFromFile(filePath: string, outputFilePath: string): void {
   // Write the IDs to the output file
   fs.writeFileSync(outputFilePath, ids.join('\n'), 'utf-8');
   console.log(`Extracted ${ids.length} IDs and saved to ${outputFilePath}`);
-}
+};
 
 // Paths for input and output files
 const inputFilePath = path.join(__dirname, 'input.txt');
